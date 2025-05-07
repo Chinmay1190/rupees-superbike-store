@@ -30,10 +30,13 @@ export default function Products() {
   const initialNewOnly = searchParams.get("new") === "true";
   const initialSaleOnly = searchParams.get("sale") === "true";
 
+  // Get min/max prices as a properly typed tuple
+  const [minPrice, maxPrice] = getMinMaxPrice();
+
   // Filter states
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(initialCategory);
-  const [priceRange, setPriceRange] = useState<[number, number]>(getMinMaxPrice());
+  const [priceRange, setPriceRange] = useState<[number, number]>([minPrice, maxPrice]);
   const [inStockOnly, setInStockOnly] = useState(false);
   const [newOnly, setNewOnly] = useState(initialNewOnly);
   const [saleOnly, setSaleOnly] = useState(initialSaleOnly);
@@ -44,7 +47,6 @@ export default function Products() {
   // Available filter options
   const allBrands = getAllBrands();
   const allCategories = getAllCategories();
-  const [minPrice, maxPrice] = getMinMaxPrice();
   
   // Get filtered products
   const filteredProducts = getFilteredProducts({
